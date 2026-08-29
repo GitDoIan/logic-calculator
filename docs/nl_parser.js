@@ -43,6 +43,20 @@ class NaturalLanguageParser {
       return `(${this._parseClause(m[1])} → ${this._parseClause(m[2])})`;
     }
 
+    m = /\bse\s*n[aã]o\b/i.exec(text);
+    if (m) {
+      const left = text.slice(0, m.index);
+      const right = text.slice(m.index + m[0].length);
+      return `(¬(${this._parseClause(left)}) → ${this._parseClause(right)})`;
+    }
+
+    m = /\b(ent[aã]o|portanto)\b/i.exec(text);
+    if (m) {
+      const left = text.slice(0, m.index);
+      const right = text.slice(m.index + m[0].length);
+      return `(${this._parseClause(left)} → ${this._parseClause(right)})`;
+    }
+
     let parts = text.split(/\bou\b/i);
     if (parts.length > 1) {
       return "(" + parts.map((p) => this._parseClause(p)).join(" ∨ ") + ")";

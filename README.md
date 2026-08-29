@@ -89,17 +89,27 @@ abaixo, não qualquer frase livre.
 Padrões reconhecidos, verificados nesta ordem:
 
 1. `"X se e somente se Y"` → bicondicional
-2. `"se X então Y"` (ou `"se X, Y"`) → condicional
-3. `"X ou Y"` → disjunção
-4. `"X e Y"` → conjunção
-5. `"não X"` / `"nao X"` → negação
-6. Qualquer trecho que sobrar depois dessas checagens vira uma **proposição
+2. `"se X então Y"` (ou `"se X, Y"`, precisa começar a frase com "se") → condicional
+3. `"X, senão Y"` / `"X, se não, Y"` → `¬X → Y` ("Y só acontece se X não acontecer")
+4. `"X, então Y"` / `"X, portanto Y"` (então/portanto **no meio** da frase, sem precisar de "se" no começo) → condicional
+5. `"X ou Y"` → disjunção
+6. `"X e Y"` → conjunção
+7. `"não X"` / `"nao X"` (só no começo da frase) → negação
+8. Qualquer trecho que sobrar depois dessas checagens vira uma **proposição
    atômica**, recebendo automaticamente um rótulo `P1`, `P2`, `P3`... Esses
    rótulos e o texto original de cada um aparecem numa legenda na tela, para
    você conferir o que o app entendeu.
 
 Exemplo: a frase `"se chove então a rua molha"` vira a fórmula `(P1 → P2)`,
 com a legenda `P1: chove` e `P2: a rua molha`.
+
+**Limitação conhecida do "senão"**: a regra trata TUDO que veio antes do
+"senão"/"se não" como o antecedente que está sendo negado. Em frases curtas de
+duas partes isso funciona muito bem (`"estudo, senão reprovo"` → `¬P1 → P2`).
+Em frases longas com vários conectores encadeados, o antecedente vira a frase
+inteira anterior — o que é uma leitura mecanicamente consistente, mas pode não
+bater com a intenção mais "natural" de quem escreveu. Pra resultados mais
+previsíveis, prefira frases mais curtas e diretas.
 
 Frases mais complexas são resolvidas recursivamente: por exemplo, `"se chove e
 está frio então a rua molha ou congela"` primeiro identifica a estrutura

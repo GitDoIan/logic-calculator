@@ -87,6 +87,22 @@ def test_natural_language():
     formula, legend = parser.parse("a luz acende se e somente se o interruptor esta ligado")
     check("bicondicional em PT-BR", formula == "(P1 ↔ P2)")
 
+    parser = NaturalLanguageParser()
+    formula, legend = parser.parse("eu estudo, senão eu reprovo")
+    check("senão em PT-BR", formula == "(¬(P1) → P2)")
+
+    parser = NaturalLanguageParser()
+    formula, legend = parser.parse("eu estudo, se não, eu reprovo")
+    check("se não (duas palavras) em PT-BR", formula == "(¬(P1) → P2)")
+
+    parser = NaturalLanguageParser()
+    formula, legend = parser.parse("eu suei muito, portanto vou tomar banho")
+    check("portanto no meio da frase", formula == "(P1 → P2)")
+
+    parser = NaturalLanguageParser()
+    formula, legend = parser.parse("eu joguei bola, então estou cansado")
+    check("então no meio da frase (sem 'se')", formula == "(P1 → P2)")
+
 
 if __name__ == "__main__":
     test_symbolic_and_text_equivalence()

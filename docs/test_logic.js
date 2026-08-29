@@ -86,4 +86,24 @@ function check(desc, condition) {
   check("bicondicional em PT-BR", formula === "(P1 ↔ P2)");
 }
 
+{
+  const { formula } = new NaturalLanguageParser().parse("eu estudo, senão eu reprovo");
+  check("senão em PT-BR", formula === "(¬(P1) → P2)");
+}
+
+{
+  const { formula } = new NaturalLanguageParser().parse("eu estudo, se não, eu reprovo");
+  check("se não (duas palavras) em PT-BR", formula === "(¬(P1) → P2)");
+}
+
+{
+  const { formula } = new NaturalLanguageParser().parse("eu suei muito, portanto vou tomar banho");
+  check("portanto no meio da frase", formula === "(P1 → P2)");
+}
+
+{
+  const { formula } = new NaturalLanguageParser().parse("eu joguei bola, então estou cansado");
+  check("então no meio da frase (sem 'se')", formula === "(P1 → P2)");
+}
+
 console.log("\nTodos os testes passaram.");

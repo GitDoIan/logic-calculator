@@ -1,11 +1,13 @@
 """Interpretação de frases em português para fórmulas de lógica proposicional.
 
 Abordagem baseada em regras (sem IA/API externa, offline, sem custo). Reconhece:
-  - "X se e somente se Y"      -> X ↔ Y
-  - "se X então Y" / "se X, Y" -> X → Y
-  - "X ou Y"                   -> X ∨ Y
-  - "X e Y"                    -> X ∧ Y
-  - "não X" / "nao X"          -> ¬X
+  - "X se e somente se Y"           -> X ↔ Y
+  - "se X então Y" / "se X, Y"      -> X → Y
+  - "X, senão Y" / "X, se não, Y"   -> ¬X → Y   (Y só acontece se X não acontecer)
+  - "X, então Y" / "X, portanto Y"  -> X → Y    (então/portanto no meio da frase)
+  - "X ou Y"                        -> X ∨ Y
+  - "X e Y"                         -> X ∧ Y
+  - "não X" / "nao X"               -> ¬X
 Trechos que não casam com nenhum padrão viram proposições atômicas (P1, P2, ...),
 registradas numa legenda para o usuário conferir o que cada uma significa.
 """
@@ -51,6 +53,16 @@ class NaturalLanguageParser:
         m = re.match(r"^\s*se\s+(.*?)\s*,?\s*ent[aã]o\s+(.*)$", text, re.IGNORECASE)
         if m:
             return f"({self._parse_clause(m.group(1))} → {self._parse_clause(m.group(2))})"
+
+        m = re.search(r"\bse\s*n[aã]o\b", text, re.IGNORECASE)
+        if m:
+            left, right = text[:m.start()], text[m.end():]
+            return f"(¬({self._parse_clause(left)}) → {self._parse_clause(right)})"
+
+        m = re.search(r"\b(ent[aã]o|portanto)\b", text, re.IGNORECASE)
+        if m:
+            left, right = text[:m.start()], text[m.end():]
+            return f"({self._parse_clause(left)} → {self._parse_clause(right)})"
 
         parts = re.split(r"\bou\b", text, flags=re.IGNORECASE)
         if len(parts) > 1:
