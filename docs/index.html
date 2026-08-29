@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora Lógica</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <h1>Calculadora Lógica</h1>
+    <p class="subtitle">Monte uma fórmula com símbolos, texto ou uma frase em português.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-target="panel-formula">Fórmula Lógica</button>
+      <button class="tab-btn" data-target="panel-nl">Linguagem Natural</button>
+    </div>
+
+    <div id="panel-formula" class="panel active">
+      <p class="hint">Aceita símbolos (¬ ∧ ∨ → ↔) e texto (NOT/AND/OR, NÃO/E/OU, ! &amp; | -&gt; &lt;-&gt;):</p>
+      <input type="text" id="formula-input" placeholder="ex: p -> q" />
+
+      <div class="keypad">
+        <button class="key" data-key="p">p</button>
+        <button class="key" data-key="q">q</button>
+        <button class="key" data-key="r">r</button>
+        <button class="key" data-key="s">s</button>
+        <button class="key" data-key="t">t</button>
+        <button class="key" data-key="u">u</button>
+        <button class="key" data-key="v">v</button>
+        <button class="key" data-key="w">w</button>
+        <button class="key" data-key="x">x</button>
+        <button class="key" data-key="y">y</button>
+        <button class="key" data-key="(">(</button>
+        <button class="key" data-key=")">)</button>
+        <button class="key" data-key="¬">¬</button>
+        <button class="key" data-key="∧">∧</button>
+        <button class="key" data-key="∨">∨</button>
+        <button class="key" data-key="→">→</button>
+        <button class="key" data-key="↔">↔</button>
+        <button class="key" data-key="back">⌫</button>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-secondary" id="clear-btn">Limpar</button>
+        <button class="btn-primary" id="calc-btn">Calcular</button>
+      </div>
+    </div>
+
+    <div id="panel-nl" class="panel">
+      <p class="hint">Digite uma frase em português (ex: "se chove então a rua molha"):</p>
+      <textarea id="nl-input" placeholder="se chove então a rua molha"></textarea>
+      <div class="action-row">
+        <button class="btn-primary" id="nl-btn">Converter e Calcular</button>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <div class="results">
+      <div class="error" id="error" style="display:none"></div>
+      <div class="formula-display" id="formula-display"></div>
+      <span class="classification" id="classification" style="display:none"></span>
+      <div class="table-wrap" id="table-wrap"></div>
+    </div>
+
+    <footer>
+      Roda inteiramente no seu navegador — nenhum dado sai do seu dispositivo.
+      <a href="https://github.com/GitDoIan/logic-calculator" target="_blank" rel="noopener">Código-fonte no GitHub</a>.
+    </footer>
+  </div>
+
+  <script src="logic.js"></script>
+  <script src="nl_parser.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
